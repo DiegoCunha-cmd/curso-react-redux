@@ -11,7 +11,11 @@ export default () => {
             <Switch> {/* como um switch case */}
                 <Route exact path="/" component={Home} />
                     {/* poderia usar exact={true} */}
-                <Route exact path="/cadastro-produtos" component={CadastroProduto} />               
+                
+                {/* sugestão de um colega - vc pode chamar o cadastro mesmo estando editando */}
+                <Route exact path="/cadastro-produtos/" component={() => <CadastroProduto />}></Route>
+
+                <Route exact path="/cadastro-produtos/:sku?" component={CadastroProduto} />               
                 <Route exact path="/consulta-produtos" component={ConsultaProdutos} />
             </Switch>
     )
