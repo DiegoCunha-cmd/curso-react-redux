@@ -1,6 +1,8 @@
 import React from 'react'
 
 import Card from '../../components/card'
+import ProdutosTable from './produtosTable'
+
 import ProdutoService from '../../app/produtoService'
 import { withRouter } from 'react-router-dom'
 	// importamos um decorator - método q recebe vomo parâmetro um componente o o devolve com novas funcionalidades
@@ -44,47 +46,17 @@ class ConsultaProdutos extends React.Component {
 
 				{/* <div className='card-body'> */}
 
-					<table className='table table-hover'>
-
-						<thead>
-							<tr>
-								<th>Nome</th>
-								<th>SKU</th>
-								<th>Preço</th>
-								<th>Fornecedor</th>
-								<th></th>
-							</tr>
-						</thead>
-
-						<tbody>
-							{this.state.produtos.map((produto, index) => (
-								<tr key={index}>
-									<th>{produto.nome}</th>
-									<th>{produto.sku}</th>
-									<th>{produto.preco}</th>
-									<th>{produto.fornecedor}</th>
-									<th>
-										
-										<button 
-											onClick={() => this.preparaEditar(produto.sku)} 
-											className='btn btn-primary'>
-												Editar
-										</button>
-
-										<button 
-											onClick={() => this.deletar(produto.sku)}
-											className='btn btn-danger'>
-												Remover
-										</button>
-
-									</th>
-								</tr>
-							))
-							}
-						</tbody>
-
-					</table>
+					{/* tirei toda a tabela daqui e levei pra produtosTable.js */}
+					<ProdutosTable
 					
+						// vamos passar as props pra usar lá
+						produtos={this.state.produtos}
+						editarAction={this.preparaEditar}
+						deletarAction={this.deletar}
+
+					/>
+
+
 				{/* </div> */}
 			{/* </div> */}
 			</Card>
