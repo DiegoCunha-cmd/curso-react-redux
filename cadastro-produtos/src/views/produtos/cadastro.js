@@ -1,14 +1,23 @@
 import React from 'react'
 
+import ProdutoService from '../../app/produtoService'
+
 const estadoInicial = {
 	nome: '',
 	sku: '',
 	descricao: '',
 	preco: 0,
 	fornecedor: '',
+	sucesso: false,
+	errors: []
 }
 
 export default class CadastroProduto extends React.Component {
+
+	constructor() {
+		super()
+		this.service = new ProdutoService()
+	}
 
 	state = estadoInicial
 
@@ -18,9 +27,29 @@ export default class CadastroProduto extends React.Component {
 		this.setState({ [nomeDoCampo]: valor })
 	}
 
-	// pra saber se pegou tudo direitinho
 	onSubmit = (event) => {
-		console.log(this.state)
+		// console.log(this.state) // pra saber se pegou tudo direitinho
+
+		// salvando no Local Storage
+		const produto = {
+			nome: this.state.nome,
+			sku: this.state.sku,
+			descricao: this.state.descricao,
+			preco: this.state.preco,
+			fornecedor: this.state.fornecedor,
+		}
+
+		// juntando a validação
+		try {
+			this.service.salvar(produto)
+			this.limpaCampos()
+			// console.log('Salvo com sucesso')
+			this.setState({ sucesso: true })
+		} catch(erro) {
+			const errors = erro.errors
+			this.setState({errors: errors})
+		}
+
 	}
 
 	limpaCampos = () => {
@@ -36,6 +65,23 @@ export default class CadastroProduto extends React.Component {
                 </div>
 
 				<div className='card-body'>
+
+					{ this.state.sucesso && 
+							<div class="alert alert-dismissible alert-success" wfd-id="199">
+								<button onClick={this.limpaCampos} type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button>
+								<strong>Bem feito!</strong> Cadastro realizado com sucesso.
+							</div>
+					}
+
+					{ this.state.errors.length > 0 &&
+							this.state.errors.map(msg => (
+								<div class="alert alert-dismissible alert-danger" wfd-id="199">
+									{/* <button type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button> */}
+									<strong>Erro!</strong> {msg}.
+								</div>
+							))
+					}
+
 
 					<div className='row'>
 						<div className='col-md-6'>
@@ -55,7 +101,7 @@ export default class CadastroProduto extends React.Component {
 					<div className='row'>
 						<div className='col-md-12'>
 							<div className='form-group'>
-								<label>Descrição: *</label>
+								<label>Descrição:</label>
 								<textarea name='descricao' onChange={this.onChange} value={this.state.descricao} className='form-control'></textarea>
 							</div>
 						</div>
@@ -80,7 +126,7 @@ export default class CadastroProduto extends React.Component {
 						<div className='col-md-1'>
 							<button onClick={this.onSubmit} className='btn btn-success'>Salvar</button>
 						</div>
-						<div className='col-md-1'/>
+						<div className='col-md-1' />
 						<div className='col-md-1'>
 							<button onClick={this.limpaCampos} className='btn btn-primary'>Limpar</button>
 						</div>
