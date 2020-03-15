@@ -48,14 +48,11 @@ class ConsultaProdutos extends React.Component {
 
 					{/* tirei toda a tabela daqui e levei pra produtosTable.js */}
 					<ProdutosTable
-					
 						// vamos passar as props pra usar lá
 						produtos={this.state.produtos}
 						editarAction={this.preparaEditar}
 						deletarAction={this.deletar}
-
 					/>
-
 
 				{/* </div> */}
 			{/* </div> */}
