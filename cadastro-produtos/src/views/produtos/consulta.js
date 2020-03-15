@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Card from '../../components/card'
 import ProdutoService from '../../app/produtoService'
 import { withRouter } from 'react-router-dom'
 	// importamos um decorator - método q recebe vomo parâmetro um componente o o devolve com novas funcionalidades
@@ -34,13 +35,14 @@ class ConsultaProdutos extends React.Component {
 
 	render() {
 		return (
-			<div className='card'>
+			<Card header='Consulta Produtos'>
+			{/* <div className='card'> */}
 
-				<div className='card-header'>
+				{/* <div className='card-header'>
 					Consulta Produtos
-                </div>
+                </div> */}
 
-				<div className='card-body'>
+				{/* <div className='card-body'> */}
 
 					<table className='table table-hover'>
 
@@ -82,8 +84,10 @@ class ConsultaProdutos extends React.Component {
 						</tbody>
 
 					</table>
-				</div>
-			</div>
+					
+				{/* </div> */}
+			{/* </div> */}
+			</Card>
 		)
 	}
 }
