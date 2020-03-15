@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ProdutoService from '../../app/produtoService'
+import { withRouter } from 'react-router-dom'
 
 const estadoInicial = {
 	nome: '',
@@ -9,10 +10,11 @@ const estadoInicial = {
 	preco: 0,
 	fornecedor: '',
 	sucesso: false,
-	errors: []
+	errors: [],
+	atualizando: false
 }
 
-export default class CadastroProduto extends React.Component {
+class CadastroProduto extends React.Component {
 
 	constructor() {
 		super()
@@ -45,9 +47,9 @@ export default class CadastroProduto extends React.Component {
 			this.limpaCampos()
 			// console.log('Salvo com sucesso')
 			this.setState({ sucesso: true })
-		} catch(erro) {
+		} catch (erro) {
 			const errors = erro.errors
-			this.setState({errors: errors})
+			this.setState({ errors: errors })
 		}
 
 	}
@@ -56,30 +58,47 @@ export default class CadastroProduto extends React.Component {
 		this.setState(estadoInicial)
 	}
 
+	componentDidMount() {
+		//console.log(this.props.match) // primeiro damos uma olhada no objeto: params.sku
+		const sku = this.props.match.params.sku
+
+		if (sku) {
+			const resultado = this.service.obterProdutos().filter(produto => produto.sku === sku)
+			if (resultado.length === 1) {
+				const produtoEncontrado = resultado[0]
+				this.setState({
+					...produtoEncontrado,
+					atualizando: true
+				})
+			}
+		}
+	}
+
 	render() {
 		return (
 			<div className='card'>
 
 				<div className='card-header'>
-					Cadastro de Produto
-                </div>
+					{this.state.atualizando ? 'Atualização ' : 'Cadastro '}
+					de Produto
+        </div>
 
 				<div className='card-body'>
 
-					{ this.state.sucesso && 
-							<div class="alert alert-dismissible alert-success" wfd-id="199">
-								<button onClick={this.limpaCampos} type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button>
-								<strong>Bem feito!</strong> Cadastro realizado com sucesso.
+					{this.state.sucesso &&
+						<div class="alert alert-dismissible alert-success" wfd-id="199">
+							<button onClick={this.limpaCampos} type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button>
+							<strong>Bem feito!</strong> Cadastro realizado com sucesso.
 							</div>
 					}
 
-					{ this.state.errors.length > 0 &&
-							this.state.errors.map(msg => (
-								<div class="alert alert-dismissible alert-danger" wfd-id="199">
-									{/* <button type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button> */}
-									<strong>Erro!</strong> {msg}.
-								</div>
-							))
+					{this.state.errors.length > 0 &&
+						this.state.errors.map(msg => (
+							<div class="alert alert-dismissible alert-danger" wfd-id="199">
+								{/* <button type="button" class="close" data-dismiss="alert" wfd-id="532">&times;</button> */}
+								<strong>Erro!</strong> {msg}.
+							</div>
+						))
 					}
 
 
@@ -93,7 +112,14 @@ export default class CadastroProduto extends React.Component {
 						<div className='col-md-6'>
 							<div className='form-group'>
 								<label> SKU: *</label>
-								<input type='text' name='sku' onChange={this.onChange} value={this.state.sku} className='form-control'></input>
+								<input 
+									type='text' 
+									name='sku'
+									disabled={this.state.atualizando}
+									onChange={this.onChange} 
+									value={this.state.sku} 
+									className='form-control'
+								/>
 							</div>
 						</div>
 					</div>
@@ -124,9 +150,11 @@ export default class CadastroProduto extends React.Component {
 
 					<div className='row'>
 						<div className='col-md-1'>
-							<button onClick={this.onSubmit} className='btn btn-success'>Salvar</button>
+							<button onClick={this.onSubmit} className='btn btn-success'>
+								{this.state.atualizando ? 'Atualizar' : 'Salvar'}
+							</button>
 						</div>
-						<div className='col-md-1' />
+						<div className='col-md-1'></div>
 						<div className='col-md-1'>
 							<button onClick={this.limpaCampos} className='btn btn-primary'>Limpar</button>
 						</div>
@@ -138,3 +166,5 @@ export default class CadastroProduto extends React.Component {
 		)
 	}
 }
+
+export default withRouter(CadastroProduto)
