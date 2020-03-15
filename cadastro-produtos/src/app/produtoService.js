@@ -33,7 +33,34 @@ export default class ProdutoService {
 
     obterProdutos = () => {
         const produtos = localStorage.getItem(PRODUTOS)
+        if(!produtos){
+            return []
+        }
         return JSON.parse(produtos)
+    }
+
+    obterIndex = (sku) => {
+        let index = null
+        this.obterProdutos().forEach( (produto, i) => {
+            if(produto.sku === sku) {
+                index = i
+            }
+        })
+        return index
+    }
+
+    deletar = (sku) => {
+        const index = this.obterIndex(sku)
+        if(index !== null) { // existe o produto pra ser deletado
+            const produtos = this.obterProdutos()
+            produtos.splice(index, 1)
+
+            //atualizo o LocalStorage
+            localStorage.setItem( PRODUTOS, JSON.stringify(produtos) )
+
+            //para atualizar a view -- volto no deletar da consulta
+            return produtos
+        }
     }
 
     salvar = (produto) => {
@@ -48,10 +75,15 @@ export default class ProdutoService {
             produtos = JSON.parse(produtos)
         }
 
-        produtos.push(produto)
+        // precauções para atualizar
+        const index = this.obterIndex(produto.sku)
+        if(index === null){
+            produtos.push(produto)
+        } else { //aqui para atualizar
+            produtos[index] = produto
+        }
 
         //agora, atualizado, adiciono ele no LocalStorage
-
         localStorage.setItem( PRODUTOS, JSON.stringify(produtos) )
             // chave e valor ... o valor transformado em string
     }
