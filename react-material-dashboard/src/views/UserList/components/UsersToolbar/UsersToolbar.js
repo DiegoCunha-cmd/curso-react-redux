@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@material-ui/core';
 
-import { SearchInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -25,13 +32,25 @@ const useStyles = makeStyles(theme => ({
   },
   searchInput: {
     marginRight: theme.spacing(1)
+  },
+  rosana: {
+    display: 'flex',
+    'justify-content': 'space-between'
   }
 }));
 
 const UsersToolbar = props => {
   const { className, ...rest } = props;
 
+  const [descricao, setDescricao] = useState()
+  const [categoria, setCategoria] = useState()
+
   const classes = useStyles();
+
+  const submit = (e) => {
+    e.preventDefault()
+    console.log(`Valores: descricao = ${descricao}, categoria = ${categoria}`)
+  }
 
   return (
     <div
@@ -40,20 +59,43 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add user
-        </Button>
       </div>
       <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search user"
-        />
+        <Grid container className={classes.rosana}>
+
+          <Grid item md={4}>
+            <TextField
+              className={classes.searchInput}
+              placeholder="Descrição da tarefa"
+              label='Descrição:'
+              fullWidth // fullWidth={true}
+              value={descricao}
+              onChange={e => setDescricao(e.target.value)}
+            />
+          </Grid>
+
+          <Grid item md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Categoria: </InputLabel>
+              <Select
+                value={categoria}
+                onChange={e => setCategoria(e.target.value)}
+              >
+                <MenuItem value=''>Selecione...</MenuItem>
+                <MenuItem value={'TRABALHO'}>Trabalho</MenuItem>
+                <MenuItem value={'ESTUDOS'}>Estudos</MenuItem>
+                <MenuItem value={'OUTROS'}>Outros</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item md={2}>
+            <Button onClick={submit} variant='contained' color='secondary'>
+              Adicionar
+            </Button>
+          </Grid>
+
+        </Grid>
       </div>
     </div>
   );
