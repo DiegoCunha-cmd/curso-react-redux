@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 
-import useStore from './somaReducer'
+import useStore from '../reducer/calculaReducer'
 
 function UseReducerExemplo() {
 
     const [numero, setNumero] = useState()
     const [ segundoNumero, setSegundoNumero ] = useState()
+    
+    // COMO ERA ANTES
     // const [ resultado, setResultado ] = useState()
+    
+    // AGORA
     const [ store, dispatch ] = useStore()
 
     
     const somar = () => {
+        // COMO ERA ANTES
         // setResultado( parseInt(numero) + parseInt(segundoNumero) )
+
+        // AGORA
+        // console.log('dispachando a action SOMA')
         dispatch({
             type: 'SOMA',
             payload: parseInt(numero) + parseInt(segundoNumero)
@@ -19,6 +27,11 @@ function UseReducerExemplo() {
     }
     
     const subtrair = () => {
+        // COMO ERA ANTES
+        // setResultado( parseInt(numero) - parseInt(segundoNumero) )
+
+        // AGORA
+        // console.log('dispachando a action SUBTRACAO')
         dispatch({
             type: 'SUBTRACAO',
             payload: parseInt(numero) - parseInt(segundoNumero)
@@ -43,11 +56,13 @@ function UseReducerExemplo() {
 			<p><button onClick={somar}>Somar</button></p>
             <p><button onClick={subtrair}>Subtrair</button></p>
 
-			<p>Resultado: <input 
-				type='text' 
-                // value={resultado} 
-                value={store.resultado} 
-				/></p>
+			<p><span>Resultado: </span>
+                {/* COMO ERA ANTES */}
+                {/* {resultado} */}
+
+                {/* AGORA */}
+                {store.resultado}
+            </p>
         </>
     )
 }

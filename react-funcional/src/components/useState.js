@@ -4,7 +4,7 @@ function UseStateExemplo() {
 
 	// PRIMEIRA FORMA
 		// dentro do parenteses coloca o valor padrão... nesse caso não coloquei, então será inexiste
-  const [ numero, setNumero ] = useState() 
+  	const [ numero, setNumero ] = useState() 
 	const [ segundoNumero, setSegundoNumero ] = useState()
 	const [ resultado, setResultado ] = useState()
 
@@ -19,6 +19,11 @@ function UseStateExemplo() {
 		setResultado( parseInt(numero) + parseInt(segundoNumero) )
 	}
 
+	// não é necessário fazer esse passo
+	// const mudaNumoero1 = (event) => {
+	// 	setNumero(event.target.value)
+	// }
+
   return (
     <div>
 			{/* PRIMEIRA FORMA */}
@@ -28,6 +33,7 @@ function UseStateExemplo() {
 			<p>Número 1: <input 
 				type='number' 
 				value={numero} 
+				// onChange={mudaNumoero1} // jeito que eu sabia fazer
 				onChange={event => setNumero(event.target.value)} 
 				/></p>
 
@@ -39,10 +45,7 @@ function UseStateExemplo() {
 			
 			<p><button onClick={somar}>Somar</button></p>
 
-			<p>Resultado: <input 
-				type='text' 
-				value={resultado} 
-				/></p>
+			<p>Resultado: {resultado} </p>
 
 			{/* SEGUNDA FORMA */}
 			{/* <p><input type='text' value={state.numero} /></p>

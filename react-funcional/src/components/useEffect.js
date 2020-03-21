@@ -7,24 +7,21 @@ function UseEffectExemplo() {
 
     // como o componentDidMount podemos usar pra carregar algo na tela
     useEffect(() => {
-
         //vamos testar e, que momento ele vai imprimir.. 
-            // assim q a página carrega (nesse caso, undefined)
-            // mesmo que mude depois, nada acontece
-        console.log('variável número', numero)
-
+        console.log('variável número: ', numero)
     }
         // esse array é opcional
 
-            // assim, só apareceu o console quando carregou
-        , [])
+        // array vazio -> só apareceu o console quando carrega a página
+            //funciona como DidMount --> ex: já trazer tabela de um servidor
+        // , [])
 
-            // mas se passarmos estados, ele vai executar quando esse estado for acionado
+        // se não passar nada -> ele é modificado toda vez q modificar qq variável
+            // funciona como DidMount + DidUpdate
+        )       
+
+        // se passarmos estados --> ele vai executar quando esse estado for acionado
         // , [numero])
-
-            // e se não passar nada, ele é modificado toda vez q modificar qq variável
-        // )
-
 
     return (
         <>

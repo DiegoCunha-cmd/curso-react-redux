@@ -2,7 +2,7 @@ import React from 'react';
 
 // import UseStateExemplo from './components/useState';
 // import UseEffectExemplo from './components/useEffect';
-import UseReducerExemplo from './components/reducer';
+import UseReducerExemplo from './components/useReducer';
 
 function App() {
 
