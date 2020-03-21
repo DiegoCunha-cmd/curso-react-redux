@@ -80,6 +80,7 @@ const SidebarNav = props => {
   );
 };
 
+
 SidebarNav.propTypes = {
   className: PropTypes.string,
   pages: PropTypes.array.isRequired
