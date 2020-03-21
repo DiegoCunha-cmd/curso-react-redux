@@ -12,7 +12,6 @@ import {
   InputLabel
 } from '@material-ui/core';
 
-
 const useStyles = makeStyles(theme => ({
   root: {},
   row: {
@@ -48,8 +47,8 @@ const TarefasToolbar = props => {
   const classes = useStyles();
 
   const submit = (e) => {
-    e.preventDefault()
-    console.log(`Valores: descricao = ${descricao}, categoria = ${categoria}`)
+    e.preventDefault() // não submete o formulário, mas manda as opções
+    console.log(`Valores: \nDescrição = ${descricao} \nCategoria = ${categoria}`)
   }
 
   return (
@@ -57,11 +56,13 @@ const TarefasToolbar = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <div className={classes.row}>
+      {/* <div className={classes.row}>
         <span className={classes.spacer} />
-      </div>
+      </div> */}
       <div className={classes.row}>
-        <Grid container className={classes.rosana}>
+        <Grid container 
+          className={classes.rosana}
+        >
 
           <Grid item md={4}>
             <TextField
@@ -69,6 +70,7 @@ const TarefasToolbar = props => {
               placeholder="Descrição da tarefa"
               label='Descrição:'
               fullWidth // fullWidth={true}
+              
               value={descricao}
               onChange={e => setDescricao(e.target.value)}
             />
@@ -90,7 +92,11 @@ const TarefasToolbar = props => {
           </Grid>
 
           <Grid item md={2}>
-            <Button onClick={submit} variant='contained' color='secondary'>
+            <Button 
+              onClick={submit} 
+              variant='contained' 
+              color='secondary'
+            >
               Adicionar
             </Button>
           </Grid>

@@ -12,10 +12,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const TarefaList = () => {
+
   const classes = useStyles();
 
-  const [tarefas] = useState([]);
+  const [tarefas] = useState([]); // não tem info pq passei um array vazio
 
   return (
     <div className={classes.root}>

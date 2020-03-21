@@ -37,30 +37,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TarefasTable = props => {
+  
   const { className, tarefas, ...rest } = props;
+ 
   const classes = useStyles();
-
 
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
-
       <CardContent className={classes.content}>
-
         <PerfectScrollbar>
           <div className={classes.inner}>
             
             <Table>
 
               <TableHead>
+
                 <TableRow>
                   <TableCell>Código</TableCell>
                   <TableCell>Descrição</TableCell>
                   <TableCell>Categotia</TableCell>
                   <TableCell>Status</TableCell>
                 </TableRow>
+
               </TableHead>
 
               <TableBody>
@@ -71,16 +72,14 @@ const TarefasTable = props => {
 
           </div>
         </PerfectScrollbar>
-
       </CardContent>
-      
     </Card>
   );
 };
 
 TarefasTable.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.array.isRequired
+  tarefas: PropTypes.array.isRequired
 };
 
 export default TarefasTable;
