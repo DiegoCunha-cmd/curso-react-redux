@@ -32,14 +32,13 @@ const TarefaList = () => {
   const [mensagem, setMensagem] = useState('')
 
   const API_URL = 'https://minhastarefas-api.herokuapp.com/tarefas'
-  const headers = { 'x-tenant-id': 'rosana@email.com' }
-
+  
   const salvar = (tarefa) => {
     axios.post(
       API_URL,
       tarefa, 
       {
-        headers: headers
+        headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
       }).then(response => {
         // console.log(response.data)
         
@@ -60,7 +59,7 @@ const TarefaList = () => {
     axios.get(
       API_URL,
       {
-        headers: headers
+        headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
       }).then(response => {
         const listaDeTarefas = response.data
         setTarefas(listaDeTarefas)
@@ -77,7 +76,7 @@ const TarefaList = () => {
       `${API_URL}/${id}`,
       null,
       {
-        headers: headers
+        headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
       }).then(response => {
         // console.log(response.status)
         const lista = [...tarefas]
@@ -102,7 +101,7 @@ const TarefaList = () => {
       `${API_URL}/${id}`,
       // null,
       {
-        headers: headers
+        headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
       }).then(response => {
         // console.log(response.status)
         const lista = tarefas.filter(tarefa => tarefa.id !== id)
