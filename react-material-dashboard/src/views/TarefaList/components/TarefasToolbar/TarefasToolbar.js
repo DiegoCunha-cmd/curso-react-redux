@@ -48,7 +48,12 @@ const TarefasToolbar = props => {
 
   const submit = (e) => {
     e.preventDefault() // não submete o formulário, mas manda as opções
-    console.log(`Valores: \nDescrição = ${descricao} \nCategoria = ${categoria}`)
+    // console.log(`Valores: \nDescrição = ${descricao} \nCategoria = ${categoria}`)
+    const tarefa = {
+      descricao: descricao,
+      categoria: categoria
+    }
+    props.salvar(tarefa)
   }
 
   return (
@@ -70,7 +75,7 @@ const TarefasToolbar = props => {
               placeholder="Descrição da tarefa"
               label='Descrição:'
               fullWidth // fullWidth={true}
-              
+
               value={descricao}
               onChange={e => setDescricao(e.target.value)}
             />
