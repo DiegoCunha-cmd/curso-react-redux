@@ -144,7 +144,8 @@ const SignIn = props => {
     event.preventDefault();
     if (email) {
       localStorage.setItem('email_usuario_logado', email)
-      history.push('/');
+      // history.push('/');
+      history.push('/tarefas');
     } else {
       setMensagem('Adicione email para realizar login')
       setOpenDialog(true)
