@@ -9,11 +9,17 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
+
+
 
 const schema = {
   email: {
@@ -131,15 +137,18 @@ const SignIn = props => {
   const classes = useStyles();
   const [email, setEmail] = useState()
 
-  // const handleBack = () => {
-  //   history.goBack();
-  // };
-
+  const [openDialog, setOpenDialog] = useState(false)
+  const [mensagem, setMensagem] = useState('')
 
   const handleSignIn = event => {
     event.preventDefault();
-    localStorage.setItem('email_usuario_logado', email)
-    history.push('/');
+    if (email) {
+      localStorage.setItem('email_usuario_logado', email)
+      history.push('/');
+    } else {
+      setMensagem('Adicione email para realizar login')
+      setOpenDialog(true)
+    }
   };
 
   return (
@@ -186,11 +195,8 @@ const SignIn = props => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
-              {/* <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton> */}
-            </div>
+            {/* <div className={classes.contentHeader}>
+            </div> */}
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -208,14 +214,14 @@ const SignIn = props => {
                   gutterBottom
                 >
                 </Typography> */}
-                
+
                 <Typography
                   align="center"
                   className={classes.sugestion}
                   color="textSecondary"
                   variant="body1"
                 >
-                 Entre com seu endereço de email
+                  Entre com seu endereço de email
                 </Typography>
                 <TextField
                   className={classes.textField}
@@ -227,11 +233,10 @@ const SignIn = props => {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                 />
-               
+
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  // disabled={!formState.isValid}
                   fullWidth
                   size="large"
                   type="submit"
@@ -239,7 +244,20 @@ const SignIn = props => {
                 >
                   Entrar
                 </Button>
-                
+
+                <Dialog 
+                  open={openDialog} 
+                  onClose={() => setOpenDialog(false)}
+                >
+                  <DialogTitle>Atenção!</DialogTitle>
+                  <DialogContent>
+                    {mensagem}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setOpenDialog(false)}>fechar</Button>
+                  </DialogActions>
+                </Dialog>
+
               </form>
             </div>
           </div>
