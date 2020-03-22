@@ -20,7 +20,8 @@ import {
 
 import {
   Timer,
-  DoneAll
+  DoneAll,
+  Delete
 } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
@@ -68,6 +69,7 @@ const TarefasTable = props => {
                   <TableCell>Categotia</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
 
               </TableHead>
@@ -91,6 +93,13 @@ const TarefasTable = props => {
                         </IconButton >)
                       }
                     </TableCell>
+                    
+                    <TableCell>
+                      <IconButton onClick={() => props.deletarTarefa(tarefa.id)}>
+                        <Delete/>
+                      </IconButton>
+                    </TableCell>
+
                   </TableRow>
                 ))}
 

@@ -78,6 +78,23 @@ const TarefaList = () => {
       })
   }
 
+  const deletarTarefa = (id) => {
+    // console.log('passada prop', id)
+    axios.delete(
+      `${API_URL}/${id}`,
+      // null,
+      {
+        headers: headers
+      }).then(response => {
+        // console.log(response.status)
+        const lista = tarefas.filter(tarefa => tarefa.id !== id)
+        setTarefas(lista)
+      }).catch(erro => {
+        console.log(erro)
+      })
+  }
+
+
   //chamar a lista de tarefas assim que entrar na tela
   useEffect( () => {
     listarTarefas()
@@ -87,7 +104,11 @@ const TarefaList = () => {
     <div className={classes.root}>
       <TarefasToolbar salvar={salvar} /> {/* vamos usar o método salvar na toolbar, com submit  */}
       <div className={classes.content}>
-        <TarefasTable tarefas={tarefas} alterarStatus={alterarStatus} />
+        <TarefasTable 
+          tarefas={tarefas} 
+          alterarStatus={alterarStatus} 
+          deletarTarefa={deletarTarefa}
+        />
       </div>
     </div>
   );
