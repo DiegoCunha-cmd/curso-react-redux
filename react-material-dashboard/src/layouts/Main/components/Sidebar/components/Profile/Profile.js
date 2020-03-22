@@ -27,10 +27,10 @@ const Profile = props => {
   const classes = useStyles();
 
   const user = {
-    name: 'Rosana Rezende',
+    name: localStorage.getItem('email_usuario_logado'),
     // avatar: '/images/avatars/avatar_11.png',
-    avatar: 'https://user-images.githubusercontent.com/45580434/77236064-c1929980-6b99-11ea-9830-4723b5b0db03.jpg',
-    bio: 'Full Stack Web Developer'
+    avatar: 'https://user-images.githubusercontent.com/45580434/77255589-63bc8b00-6c47-11ea-9d19-1ca145046b36.png',
+    // bio: 'Desenvolvedor'
   };
 
   return (
@@ -51,7 +51,7 @@ const Profile = props => {
       >
         {user.name}
       </Typography>
-      <Typography variant="body2">{user.bio}</Typography>
+      {/* <Typography variant="body2">{user.bio}</Typography> */}
     </div>
   );
 };
