@@ -13,9 +13,15 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  IconButton
   // Typography,
 } from '@material-ui/core';
 // import { textChangeRangeNewSpan } from 'typescript';
+
+import {
+  Timer,
+  DoneAll
+} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -61,6 +67,7 @@ const TarefasTable = props => {
                   <TableCell>Descrição</TableCell>
                   <TableCell>Categotia</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
 
               </TableHead>
@@ -73,6 +80,17 @@ const TarefasTable = props => {
                     <TableCell>{tarefa.descricao}</TableCell>
                     <TableCell>{tarefa.categoria}</TableCell>
                     <TableCell>{tarefa.done ? 'Feito' : 'Pendente'}</TableCell>
+                    <TableCell>
+                      {tarefa.done ?
+                        (<IconButton color='secondary' >
+                          <DoneAll />
+                        </IconButton >)
+                        :
+                        (<IconButton color='primary' onClick={() => props.alterarStatus(tarefa.id)} >
+                          <Timer />
+                        </IconButton >)
+                      }
+                    </TableCell>
                   </TableRow>
                 ))}
 

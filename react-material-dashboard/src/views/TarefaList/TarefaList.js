@@ -58,6 +58,26 @@ const TarefaList = () => {
       })
   }
 
+  const alterarStatus = (id) => {
+    axios.patch(
+      `${API_URL}/${id}`,
+      null,
+      {
+        headers: headers
+      }).then(response => {
+        // console.log(response.status)
+        const lista = [...tarefas]
+        lista.forEach(tarefa => {
+          if(tarefa.id === id) {
+            tarefa.done = true
+          }
+        })
+        setTarefas(lista)
+      }).catch(erro => {
+        console.log(erro)
+      })
+  }
+
   //chamar a lista de tarefas assim que entrar na tela
   useEffect( () => {
     listarTarefas()
@@ -67,7 +87,7 @@ const TarefaList = () => {
     <div className={classes.root}>
       <TarefasToolbar salvar={salvar} /> {/* vamos usar o método salvar na toolbar, com submit  */}
       <div className={classes.content}>
-        <TarefasTable tarefas={tarefas} />
+        <TarefasTable tarefas={tarefas} alterarStatus={alterarStatus} />
       </div>
     </div>
   );
