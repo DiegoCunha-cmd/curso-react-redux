@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { TarefasToolbar, TarefasTable } from './components';
 
 import axios from 'axios'
-
-
-// axios.get('https://minhastarefas-api.herokuapp.com/tarefas', {
-//     headers: { 'x-tenant-id': 'rosana@email.com' }
-// }).then( resposta => {
-//     console.log(resposta.data)
-// })
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,19 +19,49 @@ const TarefaList = () => {
 
   const classes = useStyles();
 
-  const [tarefas] = useState([]); // não tem info pq passei um array vazio
+  // const [tarefas] = useState([]); // não tem info pq passei um array vazio
+  const [tarefas, setTarefas] = useState([]);
+
+  const API_URL = 'https://minhastarefas-api.herokuapp.com/tarefas'
+  const headers = { 'x-tenant-id': 'rosana@email.com' }
 
   const salvar = (tarefa) => {
     axios.post(
-      'https://minhastarefas-api.herokuapp.com/tarefas', 
+      API_URL,
       tarefa, 
-      { headers: { 'x-tenant-id': 'rosana@email.com' } }
-      ).then(response => {
-        console.log(response.data)
+      {
+        headers: headers
+      }).then(response => {
+        // console.log(response.data)
+        
+        // listarTarefas() // chamar o listarTarefas quando salva uma
+        // OTIMIZAÇÃO - se tiver muitas tarefas, não chamar todas novamente
+        const novaTarefa = response.data
+        setTarefas([...tarefas, novaTarefa]) // só adiciono as tarefas já existentes
+
       }).catch(erro => {
         console.log(erro)
       })
   }
+
+  const listarTarefas = () => {
+    axios.get(
+      API_URL,
+      {
+        headers: headers
+      }).then(response => {
+        const listaDeTarefas = response.data
+        setTarefas(listaDeTarefas)
+        // console.log(listaDeTarefas)
+      }).catch(erro => {
+        console.log(erro)
+      })
+  }
+
+  //chamar a lista de tarefas assim que entrar na tela
+  useEffect( () => {
+    listarTarefas()
+  }, []) // chama assim q a tela carregar - igual DidMount
 
   return (
     <div className={classes.root}>

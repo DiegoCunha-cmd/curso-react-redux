@@ -15,6 +15,7 @@ import {
   TableRow,
   // Typography,
 } from '@material-ui/core';
+// import { textChangeRangeNewSpan } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -37,9 +38,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TarefasTable = props => {
-  
+
   const { className, tarefas, ...rest } = props;
- 
+
   const classes = useStyles();
 
   return (
@@ -50,7 +51,7 @@ const TarefasTable = props => {
       <CardContent className={classes.content}>
         <PerfectScrollbar>
           <div className={classes.inner}>
-            
+
             <Table>
 
               <TableHead>
@@ -65,7 +66,16 @@ const TarefasTable = props => {
               </TableHead>
 
               <TableBody>
-                
+
+                {tarefas.map(tarefa => (
+                  <TableRow key={tarefa.id}>
+                    <TableCell>{tarefa.id}</TableCell>
+                    <TableCell>{tarefa.descricao}</TableCell>
+                    <TableCell>{tarefa.categoria}</TableCell>
+                    <TableCell>{tarefa.done ? 'Feito' : 'Pendente'}</TableCell>
+                  </TableRow>
+                ))}
+
               </TableBody>
 
             </Table>
