@@ -8,13 +8,10 @@ Site do projeto: [link](http://cadastro-produtos.surge.sh/#/)
 <br><br>
 
 
-## React Material Dashboard
+## React Material Dashboard | LISTA DE TAREFAS
 
-Para fins de aprendizado:
-- Login e Tarefas implementados usando Flux (apenas Hooks)
-- Dashboard implementado usando Redux
+Para fins de aprendizado, a aplicação foi implementada em 2 fase: primeiro usando apenas Flux/hooks (estão comentados no código) e depois usando Redux
 <br><br>
-
 
 Site do projeto: [link](http://react-material-dashboard.surge.sh/)
 
