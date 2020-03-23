@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 
-import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
@@ -39,11 +39,11 @@ const Sidebar = props => {
   const classes = useStyles();
 
   const pages = [
-    {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />
-    },
+    // {
+    //   title: 'Dashboard',
+    //   href: '/dashboard',
+    //   icon: <DashboardIcon />
+    // },
     {
       title: 'Tarefas',
       href: '/tarefas',

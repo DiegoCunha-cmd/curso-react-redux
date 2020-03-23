@@ -67,7 +67,7 @@ export const tarefaReducer = (state = ESTADO_INICIAL, action) => {
 
 // criando axios com configurações padrões
 const http = axios.create({
-    baseURL: 'https://minhastarefas-api.herokuapp.com'
+    baseURL: process.env.REACT_APP_API_BASEURL
 })
 
 export function listar() {
