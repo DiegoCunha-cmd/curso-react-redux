@@ -12,7 +12,8 @@ const ACTIONS = {
 // ================================================ REDUCERS
 
 const ESTADO_INICIAL = {
-    tarefas: []
+    tarefas: [],
+    quantidade: 0
 }
 
 export const tarefaReducer = (state = ESTADO_INICIAL, action) => {
@@ -22,13 +23,16 @@ export const tarefaReducer = (state = ESTADO_INICIAL, action) => {
         case ACTIONS.LISTAR:
             return {
                 ...state,
-                tarefas: action.tarefas
+                tarefas: action.tarefas,
+                quantidade: action.tarefas.length
             }
 
         case ACTIONS.ADD:
+            const lista = [...state.tarefas, action.tarefa]
             return {
                 ...state,
-                tarefas: [...state.tarefas, action.tarefa]
+                tarefas: lista,
+                quantidade: lista.length
             }
 
         case ACTIONS.REMOVER:
@@ -36,19 +40,20 @@ export const tarefaReducer = (state = ESTADO_INICIAL, action) => {
             const tarefasAtualizada = state.tarefas.filter(tarefa => tarefa.id !== id)
             return {
                 ...state,
-                tarefas: tarefasAtualizada
+                tarefas: tarefasAtualizada,
+                quantidade: tarefasAtualizada.length
             }
 
         case ACTIONS.UPDATE_STATUS:
-            const lista = [...state.tarefas]
-            lista.forEach(tarefa => {
+            const lista2 = [...state.tarefas]
+            lista2.forEach(tarefa => {
                 if (tarefa.id === action.id) {
                     tarefa.done = true
                 }
             })
             return {
                 ...state,
-                tarefas: lista
+                tarefas: lista2
             }
 
         default:

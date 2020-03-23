@@ -10,6 +10,10 @@ import InputIcon from '@material-ui/icons/Input';
 
 import { withRouter } from 'react-router-dom'
 
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     boxShadow: 'none'
@@ -23,11 +27,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const { className, onSidebarOpen, notifications, ...rest } = props;
 
   const classes = useStyles();
 
-  const [notifications] = useState([]);
+  // const [notifications] = useState([]);
 
   const logout = () => {
     localStorage.removeItem('email_usuario_logado') //senão fica sempre logado
@@ -50,9 +54,9 @@ const Topbar = props => {
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
+              badgeContent={notifications}
+              color="secondary"
+              // variant="dot" //muito pequeno
             >
               <NotificationsIcon />
             </Badge>
@@ -83,4 +87,11 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default withRouter(Topbar);
+const mapStateToProps = state => ({
+  notifications: state.tarefas.quantidade
+})
+
+export default compose(
+  connect(mapStateToProps),
+  withRouter
+) (Topbar);
