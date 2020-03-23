@@ -7,6 +7,7 @@ import App from './App';
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk'
+import multi from 'redux-multi'
 import mainReducer from './store'
 
 // import axios from 'axios'
@@ -18,7 +19,7 @@ import mainReducer from './store'
 //     console.log(resposta.data)
 // })
 
-const store = applyMiddleware(thunk)(createStore)(mainReducer)
+const store = applyMiddleware(thunk, multi)(createStore)(mainReducer)
 
 ReactDOM.render(
     <Provider store={store}>

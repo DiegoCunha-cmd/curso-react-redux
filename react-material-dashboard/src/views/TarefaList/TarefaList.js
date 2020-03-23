@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { listar, salvar, deletarTarefa, alterarStatus } from '../../store/tarefasReducer'
 
+import { esconderMensagem } from '../../store/mensagensReducer'
+
 import { TarefasToolbar, TarefasTable } from './components';
 
 import {
@@ -122,8 +124,9 @@ const TarefaList = (props) => {
   // }
 
 
-  const [openDialog, setOpenDialog] = useState(false)
-  const [mensagem, setMensagem] = useState('')
+  // const [openDialog, setOpenDialog] = useState(false)
+  // const [mensagem, setMensagem] = useState('')
+
 
   //chamar a lista de tarefas assim que entrar na tela
   useEffect(() => {
@@ -131,8 +134,19 @@ const TarefaList = (props) => {
     listar() // REDUX
   }, []) // chama assim q a tela carregar - igual DidMount
 
+
   // REDUX
-  const { tarefas, listar, salvar, deletarTarefa, alterarStatus } = props
+  const { 
+    tarefas, 
+    listar, 
+    salvar, 
+    deletarTarefa, 
+    alterarStatus, 
+
+    mensagem,
+    openDialog,
+    esconderMensagem
+  } = props
 
   return (
     <div className={classes.root}>
@@ -146,14 +160,14 @@ const TarefaList = (props) => {
           deletarTarefa={deletarTarefa}
         />
       </div>
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}
+      <Dialog open={openDialog} onClose={esconderMensagem}
       >
         <DialogTitle>Atenção</DialogTitle>
         <DialogContent>
           {mensagem}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>fechar</Button>
+          <Button onClick={esconderMensagem}>fechar</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -161,7 +175,10 @@ const TarefaList = (props) => {
 };
 
 const mapStateToProps = state => ({
-  tarefas: state.tarefas.tarefas
+  tarefas: state.tarefas.tarefas,
+  
+  mensagem: state.mensagem.mensagem, 
+  openDialog: state.mensagem.mostrarMensagem
 })
 
 const mapDispatchToProps = dispatch =>
@@ -169,7 +186,9 @@ const mapDispatchToProps = dispatch =>
     listar,
     salvar,
     deletarTarefa,
-    alterarStatus
+    alterarStatus,
+
+    esconderMensagem
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TarefaList);

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// ================================================ REDUCERS
+import { mostrarMensagem } from './mensagensReducer'
 
 const ACTIONS = {
     LISTAR: 'TAREFAS_LISTAR',
@@ -8,6 +8,8 @@ const ACTIONS = {
     REMOVER: 'TAREFAS_REMOVE',
     UPDATE_STATUS: 'TAREFAS_UPDATE_STATUS'
 }
+
+// ================================================ REDUCERS
 
 const ESTADO_INICIAL = {
     tarefas: []
@@ -85,10 +87,13 @@ export function salvar(tarefa) {
                 headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
             }
         ).then(response => {
-            dispatch({
-                type: ACTIONS.ADD,
-                tarefa: response.data
-            })
+            dispatch([
+                {
+                    type: ACTIONS.ADD,
+                    tarefa: response.data
+                },
+                mostrarMensagem('Tarefa adicionada com sucesso!')
+            ])
         })
     }
 }
@@ -101,10 +106,13 @@ export function deletarTarefa(id) {
                 headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
             }
         ).then(response => {
-            dispatch({
-                type: ACTIONS.REMOVER,
-                id: id
-            })
+            dispatch([
+                {
+                    type: ACTIONS.REMOVER,
+                    id: id
+                },
+                mostrarMensagem('Tarefa removida com sucesso')
+            ])
         })
     }
 }
@@ -118,10 +126,13 @@ export function alterarStatus(id) {
                 headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
             }
         ).then(response => {
-            dispatch({
-                type: ACTIONS.UPDATE_STATUS,
-                id: id
-            })
+            dispatch([
+                {
+                    type: ACTIONS.UPDATE_STATUS,
+                    id: id
+                },
+                mostrarMensagem('Status da tarefa atualizado com sucesso!')
+            ])
         })
     }
 }
